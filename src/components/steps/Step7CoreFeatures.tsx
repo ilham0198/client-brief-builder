@@ -76,7 +76,7 @@ export default function Step7CoreFeatures({ data, update, stepNumber, totalSteps
           <div className="mb-4">
             <div className="text-sm font-medium text-apple-gray-500 mb-2">Fitur Standar:</div>
             <div className="flex flex-wrap gap-3">
-              {(data.coreFeatures || []).map(f => (
+              {(data.coreFeatures || []).map((f: string) => (
                 <button key={f} type="button" onClick={() => togglePriority(f)}
                   className={`px-5 py-3 rounded-full font-medium transition-all ${(data.priorityFeatures || []).includes(f) ? 'bg-black text-white' : 'bg-apple-gray-100 text-apple-gray-600 hover:bg-apple-gray-200'}`}>
                   {f}
