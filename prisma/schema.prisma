@@ -1,0 +1,195 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+model Brief {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  status    String   @default("new")
+
+  companyName String?
+  companyEstablished String?
+  companySize String?
+  industry String?
+  industryOther String?
+  companyDescription String?
+  companyLocation String?
+  companyWebsite String?
+  companySocialMedia String?
+  contactName String?
+  contactPosition String?
+  contactPositionOther String?
+  contactEmail String?
+  contactPhone String?
+  contactWhatsApp String?
+
+  vision String?
+  mission String?
+  coreValues String?
+  coreValuesOther String?
+  uniqueSellingProposition String?
+  brandPersonality String?
+  brandPersonalityOther String?
+
+  targetAudienceDescription String?
+  audienceAge String?
+  audienceGender String?
+  audienceLocation String?
+  audienceIncome String?
+  audienceEducation String?
+  audienceOccupation String?
+  audienceInterests String?
+  audiencePainPoints String?
+  audienceBehavior String?
+  audienceBuyingJourney String?
+  audienceBuyingJourneySteps String?
+
+  competitors String?
+  competitorStrengths String?
+  competitorWeaknesses String?
+  differentiation String?
+
+  primaryGoal String?
+  primaryGoalOther String?
+  secondaryGoals String?
+  secondaryGoalsOther String?
+  kpis String?
+  kpisOther String?
+  successMetrics String?
+  timelineGoal String?
+
+  websiteType String?
+  websiteTypeOther String?
+  websitePurpose String?
+  websitePurposeOther String?
+
+  coreFeatures String?
+  customFeatures String?
+  priorityFeatures String?
+
+  hasEcommerce Boolean @default(false)
+  productTypes String?
+  productCount String?
+  paymentMethods String?
+  shippingMethods String?
+  taxRequirements String?
+  inventoryManagement Boolean @default(false)
+
+  designStyle String?
+  designStyleOther String?
+  colorPalette String?
+  customColorHex String?
+  existingBrandGuidelines String?
+  logoProvided Boolean @default(false)
+  logoFileName String?
+  logoLink String?
+  designReferences String?
+  designAvoid String?
+
+  pages String?
+  customPages String?
+  navigationStructure String?
+  navigationStructureOther String?
+
+  contentReady String?
+  copywritingNeeded Boolean @default(false)
+  toneOfVoice String?
+  toneOfVoiceOther String?
+  contentTypes String?
+  contentTypesOther String?
+  multimediaNeeds String?
+  multimediaNeedsOther String?
+  photographyNeeded Boolean @default(false)
+  videographyNeeded Boolean @default(false)
+
+  seoNeeded Boolean @default(false)
+  targetKeywords String?
+  customKeywords String?
+  contentMarketing Boolean @default(false)
+  emailMarketing Boolean @default(false)
+  socialMediaIntegration String?
+  socialMediaOther String?
+  analyticsNeeded String?
+  analyticsOther String?
+
+  domainStatus String?
+  hostingPreference String?
+  hostingPreferenceOther String?
+  performanceRequirements String?
+  accessibilityNeeds String?
+  accessibilityNeedsOther String?
+  browserSupport String?
+  browserSupportOther String?
+  deviceSupport String?
+
+  integrations String?
+  integrationsOther String?
+  customIntegrations String?
+  apiRequirements String?
+
+  securityRequirements String?
+  securityRequirementsOther String?
+  dataProtection String?
+  complianceNeeds String?
+  complianceNeedsOther String?
+  sslNeeded Boolean @default(true)
+
+  desiredLaunchDate String?
+  timelineFlexible Boolean @default(false)
+  milestones String?
+  rushProject Boolean @default(false)
+
+  budgetRange String?
+  budgetFlexible Boolean @default(false)
+  paymentTerms String?
+  paymentTermsOther String?
+  additionalBudget String?
+
+  maintenanceNeeded Boolean @default(false)
+  maintenanceLevel String?
+  maintenanceLevelOther String?
+  trainingNeeded Boolean @default(false)
+  documentationNeeded Boolean @default(false)
+
+  legalRequirements String?
+  privacyPolicyNeeded Boolean @default(false)
+  termsOfServiceNeeded Boolean @default(false)
+  cookiePolicyNeeded Boolean @default(false)
+  gdprCompliance Boolean @default(false)
+
+  contentHierarchy String?
+  ctaStrategy String?
+  userFlow String?
+  emotionalResponse String?
+  emotionalResponseOther String?
+  successStories String?
+
+  existingAssets String?
+  oldSitePainPoints String?
+  trainingAudience String?
+  communicationPrefs String?
+
+  multiRoleUsers String?
+  localization String?
+  offlineIntegration String?
+  dataMigration String?
+  backupStrategy String?
+  performanceBenchmarks String?
+  accessibilitySpecifics String?
+
+  futureRoadmap String?
+  scalabilityPlans String?
+  abTesting String?
+  printConsistency String?
+  partnership String?
+  notificationPrefs String?
+
+  additionalNotes String?
+  howHeardAboutUs String?
+  howHeardAboutUsOther String?
+  referralName String?
+}

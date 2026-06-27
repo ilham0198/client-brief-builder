@@ -1,0 +1,228 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  body {
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .gradient-apple {
+    background: linear-gradient(180deg, #000000 0%, #1d1d1f 100%);
+  }
+  
+  .gradient-text {
+    background: linear-gradient(90deg, #000000 0%, #6e6e73 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .card-apple {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  
+  .shadow-apple {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04), 0 12px 32px rgba(0, 0, 0, 0.08);
+  }
+  
+  .shadow-apple-hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 20px 48px rgba(0, 0, 0, 0.12);
+  }
+}
+
+input, textarea, select {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: #000000;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+}
+
+button {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fade-in {
+  animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   GLASS DROPDOWN - Snipzy Style
+   ============================================ */
+
+.glass-dropdown-list {
+  --bg-color: rgba(255, 255, 255, 0.25);
+  --highlight: rgba(255, 255, 255, 0.75);
+  --text: #000000;
+  --bg-hover: rgba(255, 255, 255, 0.4);
+  
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+}
+
+.glass-dropdown {
+  position: relative;
+}
+
+.dropdown-toggle {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dropdown-header {
+  position: relative;
+  display: block;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  min-height: 56px;
+}
+
+.glass-filter,
+.glass-overlay,
+.glass-specular {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.glass-filter {
+  z-index: 1;
+  backdrop-filter: blur(8px) saturate(180%);
+  -webkit-backdrop-filter: blur(8px) saturate(180%);
+}
+
+.glass-overlay {
+  z-index: 2;
+  background: var(--bg-color);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.glass-specular {
+  z-index: 3;
+  box-shadow: 
+    inset 1px 1px 2px rgba(255, 255, 255, 0.8),
+    inset -1px -1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.glass-content {
+  position: relative;
+  z-index: 4;
+  padding: 16px 20px;
+  color: var(--text);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.dropdown-arrow {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+  margin-left: 12px;
+}
+
+.dropdown-content {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 100;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+  border-radius: 16px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dropdown-content .glass-content {
+  padding: 12px 20px;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.dropdown-content .glass-content:hover {
+  background: var(--bg-hover);
+}
+
+.dropdown-toggle:checked ~ .dropdown-header .dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.dropdown-toggle:checked ~ .dropdown-content {
+  max-height: 300px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.dropdown-toggle:checked ~ .dropdown-content .glass-content {
+  padding: 12px 20px;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dropdown-content ul {
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+}
+
+.dropdown-content li {
+  margin: 0;
+}
+
+.dropdown-header:hover .glass-overlay {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.dropdown-content .glass-content.selected {
+  background: rgba(0, 0, 0, 0.08);
+  font-weight: 600;
+}
+
+@media (prefers-color-scheme: dark) {
+  .glass-dropdown-list {
+    --bg-color: rgba(0, 0, 0, 0.3);
+    --highlight: rgba(255, 255, 255, 0.15);
+    --text: #ffffff;
+    --bg-hover: rgba(255, 255, 255, 0.1);
+  }
+}
