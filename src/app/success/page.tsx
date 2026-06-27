@@ -1,7 +1,24 @@
+'use client'
+import { useSearchParams } from 'next/navigation'
+import { useEffect, useState, Suspense } from 'react'
 import Link from 'next/link'
 import { CheckCircle2, Home, Mail } from 'lucide-react'
+import DownloadPDFButton from '@/components/DownloadPDFButton'
 
-export default function Success() {
+function SuccessContent() {
+  const searchParams = useSearchParams()
+  const id = searchParams.get('id')
+  const [brief, setBrief] = useState<any>(null)
+
+  useEffect(() => {
+    if (id) {
+      fetch(`/api/briefs/${id}`)
+        .then(res => res.json())
+        .then(data => setBrief(data))
+        .catch(() => {})
+    }
+  }, [id])
+
   return (
     <div className="min-h-screen flex items-center justify-center p-6 bg-white">
       <div className="max-w-2xl text-center fade-in">
@@ -39,10 +56,21 @@ export default function Success() {
           Jika Anda memiliki pertanyaan mendesak, silakan hubungi kami di <span className="text-black font-medium">hello@perusahaananda.com</span>
         </p>
 
-        <Link href="/" className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-black text-white font-medium hover:bg-apple-gray-800 transition-all">
-          <Home className="w-4 h-4" /> Kembali ke Beranda
-        </Link>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Link href="/" className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-black text-white font-medium hover:bg-apple-gray-800 transition-all">
+            <Home className="w-4 h-4" /> Kembali ke Beranda
+          </Link>
+          {brief && <DownloadPDFButton brief={brief} />}
+        </div>
       </div>
     </div>
+  )
+}
+
+export default function Success() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+      <SuccessContent />
+    </Suspense>
   )
 }

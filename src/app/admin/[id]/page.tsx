@@ -2,9 +2,11 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
+import DownloadPDFButton from '@/components/DownloadPDFButton'
 
-export default async function Detail({ params }: { params: { id: string } }) {
-  const brief = await prisma.brief.findUnique({ where: { id: params.id } })
+export default async function Detail({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  const brief = await prisma.brief.findUnique({ where: { id } })
   if (!brief) return notFound()
 
   const parse = (v: string | null) => { try { return JSON.parse(v || '[]') } catch { return [] } }
@@ -27,8 +29,14 @@ export default async function Detail({ params }: { params: { id: string } }) {
       <Link href="/admin" className="inline-flex items-center gap-2 text-brand-600 mb-4">
         <ArrowLeft className="w-4 h-4" /> Kembali
       </Link>
-      <h1 className="text-3xl font-bold mb-2">Brief: {brief.contactName}</h1>
-      <p className="text-slate-600 mb-6">Dikirim: {new Date(brief.createdAt).toLocaleString('id-ID')}</p>
+
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <h1 className="text-3xl font-bold mb-2">Brief: {brief.contactName}</h1>
+          <p className="text-slate-600">Dikirim: {new Date(brief.createdAt).toLocaleString('id-ID')}</p>
+        </div>
+        <DownloadPDFButton brief={brief} />
+      </div>
 
       <Section title="Kontak">
         <Row l="Nama" v={brief.contactName} />

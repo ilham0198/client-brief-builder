@@ -121,7 +121,7 @@ export default function BriefPage() {
       })
       const result = await res.json()
       if (!res.ok) throw new Error(result.error || 'Gagal mengirim brief')
-      router.push('/success')
+      router.push(`/success?id=${result.id}`)
     } catch (e: any) {
       console.error('Submit error:', e)
       setError(e.message || 'Terjadi kesalahan. Silakan coba lagi.')
