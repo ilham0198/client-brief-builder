@@ -2,7 +2,7 @@
 import { BriefData } from '@/app/brief/page'
 import { Wrench, GraduationCap, FileText } from 'lucide-react'
 
-export default function Step18Maintenance({ data, update }: { data: BriefData; update: (p: any) => void }) {
+export default function Step18Maintenance({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber?: number; totalSteps?: number }) {
   const MAINTENANCE_LEVELS = [
     { id: 'basic', label: 'Basic', desc: 'Update keamanan & backup bulanan' },
     { id: 'standard', label: 'Standard', desc: 'Basic + update konten minor + monitoring' },

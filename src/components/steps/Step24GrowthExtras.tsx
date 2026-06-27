@@ -2,7 +2,7 @@
 import { BriefData } from '@/app/brief/page'
 import { TrendingUp, FlaskConical, Printer, Handshake, Bell, Rocket } from 'lucide-react'
 
-export default function Step24GrowthExtras({ data, update }: { data: BriefData; update: (p: any) => void }) {
+export default function Step24GrowthExtras({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber?: number; totalSteps?: number }) {
   const toggleNotif = (n: string) => {
     const list: string[] = data.notificationPrefs || []
     update({ notificationPrefs: list.includes(n) ? list.filter(x => x !== n) : [...list, n] })

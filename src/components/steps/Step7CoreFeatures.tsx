@@ -2,7 +2,7 @@
 import { BriefData } from '@/app/brief/page'
 import { CheckCircle, Star, Zap } from 'lucide-react'
 
-export default function Step7CoreFeatures({ data, update }: { data: BriefData; update: (p: any) => void }) {
+export default function Step7CoreFeatures({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber?: number; totalSteps?: number }) {
   const toggleFeature = (f: string) => {
     const list: string[] = data.coreFeatures || []
     update({ coreFeatures: list.includes(f) ? list.filter(x => x !== f) : [...list, f] })
