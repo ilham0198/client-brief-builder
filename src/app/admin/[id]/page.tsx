@@ -27,7 +27,7 @@ export default async function Detail({ params }: { params: { id: string } }) {
       <Link href="/admin" className="inline-flex items-center gap-2 text-brand-600 mb-4">
         <ArrowLeft className="w-4 h-4" /> Kembali
       </Link>
-      <h1 className="text-3xl font-bold mb-2">Brief: {brief.clientName}</h1>
+      <h1 className="text-3xl font-bold mb-2">Brief: {brief.contactName}</h1>
       <p className="text-slate-600 mb-6">Dikirim: {new Date(brief.createdAt).toLocaleString('id-ID')}</p>
 
       <Section title="Kontak">
