@@ -31,45 +31,44 @@ export default async function Detail({ params }: { params: { id: string } }) {
       <p className="text-slate-600 mb-6">Dikirim: {new Date(brief.createdAt).toLocaleString('id-ID')}</p>
 
       <Section title="Kontak">
-        <Row l="Nama" v={brief.clientName} />
+        <Row l="Nama" v={brief.contactName} />
         <Row l="Perusahaan" v={brief.companyName} />
-        <Row l="Email" v={brief.email} />
-        <Row l="WhatsApp" v={brief.phone} />
-        <Row l="Jabatan" v={brief.position} />
+        <Row l="Email" v={brief.contactEmail} />
+        <Row l="WhatsApp" v={brief.contactWhatsApp} />
       </Section>
 
       <Section title="Proyek">
-        <Row l="Jenis" v={brief.projectType} />
-        <Row l="Tujuan" v={parse(brief.goals)} />
-        <Row l="Target Audiens" v={brief.targetAudience} />
-        <Row l="Masalah" v={brief.problemSolved} />
+        <Row l="Jenis" v={brief.websiteType} />
+        <Row l="Tujuan" v={parse(brief.primaryGoal)} />
+        <Row l="Target Audiens" v={brief.targetAudienceDescription} />
+        <Row l="Masalah" v={brief.additionalNotes} />
       </Section>
 
       <Section title="Fitur">
-        <Row l="Fitur" v={parse(brief.features)} />
-        <Row l="CMS" v={brief.contentManagement ? 'Ya' : 'Tidak'} />
-        <Row l="Multi-bahasa" v={brief.multiLanguage ? 'Ya' : 'Tidak'} />
-        <Row l="Auth" v={brief.userAuth ? 'Ya' : 'Tidak'} />
-        <Row l="Payment" v={brief.paymentGateway ? 'Ya' : 'Tidak'} />
+        <Row l="Fitur" v={parse(brief.coreFeatures)} />
+        <Row l="CMS" v={brief.existingAssets ? 'Ya' : 'Tidak'} />
+        <Row l="Multi-bahasa" v={brief.localization ? 'Ya' : 'Tidak'} />
+        <Row l="Auth" v={brief.securityRequirements ? 'Ya' : 'Tidak'} />
+        <Row l="Payment" v={brief.paymentMethods ? 'Ya' : 'Tidak'} />
       </Section>
 
       <Section title="Desain">
         <Row l="Style" v={brief.designStyle} />
-        <Row l="Warna utama" v={brief.primaryColor} />
-        <Row l="Referensi" v={brief.referenceWebsites} />
+        <Row l="Warna utama" v={brief.colorPalette} />
+        <Row l="Referensi" v={brief.designReferences} />
       </Section>
 
       <Section title="Konten & Teknis">
         <Row l="Halaman" v={parse(brief.pages)} />
         <Row l="Konten siap" v={brief.contentReady} />
-        <Row l="Domain" v={brief.domain} />
+        <Row l="Domain" v={brief.domainStatus} />
         <Row l="SEO" v={brief.seoNeeded ? 'Ya' : 'Tidak'} />
         <Row l="Integrasi" v={parse(brief.integrations)} />
       </Section>
 
       <Section title="Timeline & Budget">
-        <Row l="Deadline" v={brief.deadline} />
-        <Row l="Budget" v={brief.budget} />
+        <Row l="Deadline" v={brief.desiredLaunchDate} />
+        <Row l="Budget" v={brief.budgetRange} />
       </Section>
 
       <Section title="Lainnya">
