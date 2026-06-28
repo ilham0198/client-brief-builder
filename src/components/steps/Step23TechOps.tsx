@@ -1,8 +1,8 @@
 'use client'
-import { BriefData } from '@/app/brief/page'
+import { BriefData, FieldErrors } from '@/app/brief/page'
 import { UserCog, Globe, QrCode, Database, ShieldAlert, Gauge, Eye } from 'lucide-react'
 
-export default function Step23TechOps({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber?: number; totalSteps?: number }) {
+export default function Step23TechOps({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber?: number; totalSteps?: number; fieldErrors?: FieldErrors }) {
   return (
     <div className="fade-in">
       <div className="mb-12">

@@ -1,9 +1,9 @@
 'use client'
-import { BriefData } from '@/app/brief/page'
+import { BriefData, FieldErrors } from '@/app/brief/page'
 import { Users, AlertCircle, TrendingUp, Heart, Plus, X, ArrowRight } from 'lucide-react'
 import StepHeader from '@/components/StepHeader'
 
-export default function Step3TargetAudience({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number }) {
+export default function Step3TargetAudience({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number; fieldErrors?: FieldErrors }) {
   const input = (label: string, key: string, placeholder = '') => (
     <div>
       <label className="block text-sm font-medium text-apple-gray-500 mb-3">{label}</label>

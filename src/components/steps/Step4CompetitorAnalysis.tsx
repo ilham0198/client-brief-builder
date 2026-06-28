@@ -1,8 +1,8 @@
 'use client'
-import { BriefData } from '@/app/brief/page'
+import { BriefData, FieldErrors } from '@/app/brief/page'
 import { Target, ThumbsUp, ThumbsDown, Zap } from 'lucide-react'
 
-export default function Step4CompetitorAnalysis({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber?: number; totalSteps?: number }) {
+export default function Step4CompetitorAnalysis({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber?: number; totalSteps?: number; fieldErrors?: FieldErrors }) {
   return (
     <div className="fade-in">
       <div className="mb-12">

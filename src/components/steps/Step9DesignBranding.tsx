@@ -1,9 +1,9 @@
 'use client'
-import { BriefData } from '@/app/brief/page'
+import { BriefData, FieldErrors } from '@/app/brief/page'
 import { Palette, Image, Link as LinkIcon, Upload } from 'lucide-react'
 import StepHeader from '@/components/StepHeader'
 
-export default function Step9DesignBranding({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number }) {
+export default function Step9DesignBranding({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number; fieldErrors?: FieldErrors }) {
   const STYLES = [
     { id: 'minimalist', label: 'Minimalist', desc: 'Clean, simple, banyak white space' },
     { id: 'modern', label: 'Modern', desc: 'Contemporary, fresh, kekinian' },

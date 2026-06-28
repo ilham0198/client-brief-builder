@@ -1,9 +1,9 @@
 'use client'
-import { BriefData } from '@/app/brief/page'
+import { BriefData, FieldErrors } from '@/app/brief/page'
 import { Plug, Code } from 'lucide-react'
 import StepHeader from '@/components/StepHeader'
 
-export default function Step14Integrations({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number }) {
+export default function Step14Integrations({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number; fieldErrors?: FieldErrors }) {
   const toggleIntegration = (i: string) => {
     const list: string[] = data.integrations || []
     update({ integrations: list.includes(i) ? list.filter(x => x !== i) : [...list, i] })

@@ -1,10 +1,10 @@
 'use client'
-import { BriefData } from '@/app/brief/page'
+import { BriefData, FieldErrors } from '@/app/brief/page'
 import { FolderCheck, AlertTriangle, GraduationCap, MessageCircle } from 'lucide-react'
 import StepHeader from '@/components/StepHeader'
 import AppleSelect from '@/components/AppleSelect'
 
-export default function Step22ProjectMgmt({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number }) {
+export default function Step22ProjectMgmt({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number; fieldErrors?: FieldErrors }) {
   const toggleAssets = (a: string) => {
     const list: string[] = data.existingAssets || []
     update({ existingAssets: list.includes(a) ? list.filter(x => x !== a) : [...list, a] })

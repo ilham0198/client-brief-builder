@@ -29,6 +29,7 @@ import Step24GrowthExtras from '@/components/steps/Step24GrowthExtras'
 import Step25Review from '@/components/steps/Step25Review'
 
 export type BriefData = Record<string, any>
+export type FieldErrors = Record<string, string>
 
 const TOTAL_STEPS = 24
 
@@ -37,6 +38,7 @@ const INITIAL: BriefData = {
   companyDescription: '', companyLocation: '', companyWebsite: '', companySocialMedia: '',
   contactName: '', contactPosition: '', contactPositionOther: '', contactEmail: '', contactPhone: '', contactWhatsApp: '',
   vision: '', mission: '', coreValues: [], uniqueSellingProposition: '', brandPersonality: '', brandPersonalityOther: '',
+  visionNotReady: false, missionNotReady: false,
   targetAudienceDescription: '', audienceAge: '', audienceGender: '', audienceLocation: '',
   audienceIncome: '', audienceEducation: '', audienceOccupation: '', audienceInterests: '',
   audiencePainPoints: '', audienceBehavior: '', audienceBuyingJourney: '', audienceBuyingJourneySteps: [],
@@ -71,44 +73,88 @@ const INITIAL: BriefData = {
   additionalNotes: '', howHeardAboutUs: '', howHeardAboutUsOther: '', referralName: '',
 }
 
+// Validation rules per step index (0-based)
+const STEP_VALIDATORS: Record<number, (data: BriefData) => FieldErrors> = {
+  0: (data) => {
+    const errors: FieldErrors = {}
+    if (!data.contactName?.trim()) errors.contactName = 'Nama lengkap wajib diisi'
+    if (!data.contactEmail?.trim()) errors.contactEmail = 'Email wajib diisi'
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.contactEmail)) errors.contactEmail = 'Format email tidak valid'
+    if (!data.contactPhone?.trim()) errors.contactPhone = 'No. telepon wajib diisi'
+    return errors
+  },
+  4: (data) => {
+    const errors: FieldErrors = {}
+    if (!data.primaryGoal) errors.primaryGoal = 'Pilih setidaknya satu tujuan utama'
+    return errors
+  },
+  5: (data) => {
+    const errors: FieldErrors = {}
+    if (!data.websiteType) errors.websiteType = 'Pilih jenis website terlebih dahulu'
+    return errors
+  },
+  16: (data) => {
+    const errors: FieldErrors = {}
+    if (!data.budgetRange) errors.budgetRange = 'Pilih rentang budget terlebih dahulu'
+    return errors
+  },
+}
+
+const ECOMMERCE_STEP_INDEX = 7
+
 export default function BriefPage() {
   const [step, setStep] = useState(0)
   const [data, setData] = useState<BriefData>(INITIAL)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({})
   const router = useRouter()
 
-  const update = (patch: Partial<BriefData>) => setData(d => ({ ...d, ...patch }))
+  const update = (patch: Partial<BriefData>) => {
+    setData(d => ({ ...d, ...patch }))
+    // Clear field errors for updated fields
+    const updatedKeys = Object.keys(patch)
+    setFieldErrors(prev => {
+      const next = { ...prev }
+      updatedKeys.forEach(k => delete next[k])
+      return next
+    })
+  }
 
-  const steps = [
-    <Step1BusinessProfile key={0} data={data} update={update} stepNumber={1} totalSteps={TOTAL_STEPS} />,
-    <Step2VisionMission key={1} data={data} update={update} stepNumber={2} totalSteps={TOTAL_STEPS} />,
-    <Step3TargetAudience key={2} data={data} update={update} stepNumber={3} totalSteps={TOTAL_STEPS} />,
-    <Step4CompetitorAnalysis key={3} data={data} update={update} stepNumber={4} totalSteps={TOTAL_STEPS} />,
-    <Step5GoalsKPI key={4} data={data} update={update} stepNumber={5} totalSteps={TOTAL_STEPS} />,
-    <Step6WebsiteType key={5} data={data} update={update} stepNumber={6} totalSteps={TOTAL_STEPS} />,
-    <Step7CoreFeatures key={6} data={data} update={update} stepNumber={7} totalSteps={TOTAL_STEPS} />,
-    <Step8Ecommerce key={7} data={data} update={update} stepNumber={8} totalSteps={TOTAL_STEPS} />,
-    <Step9DesignBranding key={8} data={data} update={update} stepNumber={9} totalSteps={TOTAL_STEPS} />,
-    <Step10PageStructure key={9} data={data} update={update} stepNumber={10} totalSteps={TOTAL_STEPS} />,
-    <Step11ContentCopy key={10} data={data} update={update} stepNumber={11} totalSteps={TOTAL_STEPS} />,
-    <Step12SEOMarketing key={11} data={data} update={update} stepNumber={12} totalSteps={TOTAL_STEPS} />,
-    <Step13Technical key={12} data={data} update={update} stepNumber={13} totalSteps={TOTAL_STEPS} />,
-    <Step14Integrations key={13} data={data} update={update} stepNumber={14} totalSteps={TOTAL_STEPS} />,
-    <Step15Security key={14} data={data} update={update} stepNumber={15} totalSteps={TOTAL_STEPS} />,
-    <Step16Timeline key={15} data={data} update={update} stepNumber={16} totalSteps={TOTAL_STEPS} />,
-    <Step17Budget key={16} data={data} update={update} stepNumber={17} totalSteps={TOTAL_STEPS} />,
-    <Step18Maintenance key={17} data={data} update={update} stepNumber={18} totalSteps={TOTAL_STEPS} />,
-    <Step19Legal key={18} data={data} update={update} stepNumber={19} totalSteps={TOTAL_STEPS} />,
-    <Step21ContentUX key={19} data={data} update={update} stepNumber={20} totalSteps={TOTAL_STEPS} />,
-    <Step22ProjectMgmt key={20} data={data} update={update} stepNumber={21} totalSteps={TOTAL_STEPS} />,
-    <Step23TechOps key={21} data={data} update={update} stepNumber={22} totalSteps={TOTAL_STEPS} />,
-    <Step24GrowthExtras key={22} data={data} update={update} stepNumber={23} totalSteps={TOTAL_STEPS} />,
-    <Step25Review key={23} data={data} update={update} stepNumber={24} totalSteps={TOTAL_STEPS} />,
-  ]
+  const isEcommerce = data.websiteType === 'ecommerce' || data.hasEcommerce
 
-  const next = () => { setError(''); setStep(s => Math.min(s + 1, TOTAL_STEPS - 1)) }
-  const prev = () => { setError(''); setStep(s => Math.max(s - 1, 0)) }
+  const validate = (stepIndex: number): boolean => {
+    const validator = STEP_VALIDATORS[stepIndex]
+    if (!validator) return true
+    const errors = validator(data)
+    setFieldErrors(errors)
+    return Object.keys(errors).length === 0
+  }
+
+  const next = () => {
+    if (!validate(step)) {
+      // Scroll to top of form to show errors
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      return
+    }
+    setError('')
+    setFieldErrors({})
+    setStep(s => {
+      const nextStep = s + 1
+      if (nextStep === ECOMMERCE_STEP_INDEX && !isEcommerce) return nextStep + 1
+      return Math.min(nextStep, TOTAL_STEPS - 1)
+    })
+  }
+
+  const prev = () => {
+    setError('')
+    setFieldErrors({})
+    setStep(s => {
+      const prevStep = s - 1
+      if (prevStep === ECOMMERCE_STEP_INDEX && !isEcommerce) return prevStep - 1
+      return Math.max(prevStep, 0)
+    })
+  }
 
   const submit = async () => {
     setLoading(true)
@@ -130,6 +176,33 @@ export default function BriefPage() {
     }
   }
 
+  const steps = [
+    <Step1BusinessProfile key={0} data={data} update={update} stepNumber={1} totalSteps={TOTAL_STEPS} fieldErrors={fieldErrors} />,
+    <Step2VisionMission key={1} data={data} update={update} stepNumber={2} totalSteps={TOTAL_STEPS} fieldErrors={fieldErrors} />,
+    <Step3TargetAudience key={2} data={data} update={update} stepNumber={3} totalSteps={TOTAL_STEPS} fieldErrors={fieldErrors} />,
+    <Step4CompetitorAnalysis key={3} data={data} update={update} stepNumber={4} totalSteps={TOTAL_STEPS} fieldErrors={fieldErrors} />,
+    <Step5GoalsKPI key={4} data={data} update={update} stepNumber={5} totalSteps={TOTAL_STEPS} fieldErrors={fieldErrors} />,
+    <Step6WebsiteType key={5} data={data} update={update} stepNumber={6} totalSteps={TOTAL_STEPS} fieldErrors={fieldErrors} />,
+    <Step7CoreFeatures key={6} data={data} update={update} stepNumber={7} totalSteps={TOTAL_STEPS} fieldErrors={fieldErrors} />,
+    <Step8Ecommerce key={7} data={data} update={update} stepNumber={8} totalSteps={TOTAL_STEPS} fieldErrors={fieldErrors} />,
+    <Step9DesignBranding key={8} data={data} update={update} stepNumber={9} totalSteps={TOTAL_STEPS} fieldErrors={fieldErrors} />,
+    <Step10PageStructure key={9} data={data} update={update} stepNumber={10} totalSteps={TOTAL_STEPS} fieldErrors={fieldErrors} />,
+    <Step11ContentCopy key={10} data={data} update={update} stepNumber={11} totalSteps={TOTAL_STEPS} fieldErrors={fieldErrors} />,
+    <Step12SEOMarketing key={11} data={data} update={update} stepNumber={12} totalSteps={TOTAL_STEPS} fieldErrors={fieldErrors} />,
+    <Step13Technical key={12} data={data} update={update} stepNumber={13} totalSteps={TOTAL_STEPS} fieldErrors={fieldErrors} />,
+    <Step14Integrations key={13} data={data} update={update} stepNumber={14} totalSteps={TOTAL_STEPS} fieldErrors={fieldErrors} />,
+    <Step15Security key={14} data={data} update={update} stepNumber={15} totalSteps={TOTAL_STEPS} fieldErrors={fieldErrors} />,
+    <Step16Timeline key={15} data={data} update={update} stepNumber={16} totalSteps={TOTAL_STEPS} fieldErrors={fieldErrors} />,
+    <Step17Budget key={16} data={data} update={update} stepNumber={17} totalSteps={TOTAL_STEPS} fieldErrors={fieldErrors} />,
+    <Step18Maintenance key={17} data={data} update={update} stepNumber={18} totalSteps={TOTAL_STEPS} fieldErrors={fieldErrors} />,
+    <Step19Legal key={18} data={data} update={update} stepNumber={19} totalSteps={TOTAL_STEPS} fieldErrors={fieldErrors} />,
+    <Step21ContentUX key={19} data={data} update={update} stepNumber={20} totalSteps={TOTAL_STEPS} fieldErrors={fieldErrors} />,
+    <Step22ProjectMgmt key={20} data={data} update={update} stepNumber={21} totalSteps={TOTAL_STEPS} fieldErrors={fieldErrors} />,
+    <Step23TechOps key={21} data={data} update={update} stepNumber={22} totalSteps={TOTAL_STEPS} fieldErrors={fieldErrors} />,
+    <Step24GrowthExtras key={22} data={data} update={update} stepNumber={23} totalSteps={TOTAL_STEPS} fieldErrors={fieldErrors} />,
+    <Step25Review key={23} data={data} update={update} stepNumber={24} totalSteps={TOTAL_STEPS} fieldErrors={fieldErrors} />,
+  ]
+
   return (
     <div className="min-h-screen bg-apple-gray-50 py-16 px-6">
       <div className="max-w-4xl mx-auto">
@@ -140,6 +213,11 @@ export default function BriefPage() {
             <div className="mt-6 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700">
               <div className="font-semibold mb-1">Terjadi kesalahan:</div>
               <div className="text-sm">{error}</div>
+            </div>
+          )}
+          {Object.keys(fieldErrors).length > 0 && (
+            <div className="mt-6 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700">
+              <div className="font-semibold text-sm">Mohon lengkapi field yang wajib diisi sebelum melanjutkan.</div>
             </div>
           )}
           <div className="flex justify-between mt-16 pt-8 border-t border-apple-gray-200">

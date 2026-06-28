@@ -1,10 +1,10 @@
 'use client'
-import { BriefData } from '@/app/brief/page'
+import { BriefData, FieldErrors } from '@/app/brief/page'
 import { Search, BarChart3, Mail, Share2 } from 'lucide-react'
 import StepHeader from '@/components/StepHeader'
 import LiquidGlassSelect from '@/components/LiquidGlassSelect'
 
-export default function Step12SEOMarketing({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number }) {
+export default function Step12SEOMarketing({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number; fieldErrors?: FieldErrors }) {
   const toggleKeyword = (k: string) => {
     const list: string[] = data.targetKeywords || []
     update({ targetKeywords: list.includes(k) ? list.filter(x => x !== k) : [...list, k] })

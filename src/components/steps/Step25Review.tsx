@@ -1,10 +1,10 @@
 'use client'
-import { BriefData } from '@/app/brief/page'
+import { BriefData, FieldErrors } from '@/app/brief/page'
 import { CheckCircle2, MessageSquare } from 'lucide-react'
 import StepHeader from '@/components/StepHeader'
 import AppleSelect from '@/components/AppleSelect'
 
-export default function Step25Review({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number }) {
+export default function Step25Review({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number; fieldErrors?: FieldErrors }) {
   const Section = ({ title, children }: any) => (
     <div className="mb-8 pb-8 border-b border-apple-gray-200 last:border-0">
       <h3 className="text-2xl font-bold text-black mb-4">{title}</h3>

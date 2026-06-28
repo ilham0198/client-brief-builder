@@ -1,8 +1,8 @@
 'use client'
-import { BriefData } from '@/app/brief/page'
+import { BriefData, FieldErrors } from '@/app/brief/page'
 import { ShoppingCart, CreditCard, Truck, Package } from 'lucide-react'
 
-export default function Step8Ecommerce({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber?: number; totalSteps?: number }) {
+export default function Step8Ecommerce({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber?: number; totalSteps?: number; fieldErrors?: FieldErrors }) {
   const PAYMENT_METHODS = [
     'Bank Transfer', 'Credit Card', 'Debit Card', 'E-Wallet (OVO, GoPay, Dana)',
     'QRIS', 'Virtual Account', 'COD (Cash on Delivery)', 'PayLater',

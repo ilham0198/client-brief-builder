@@ -1,9 +1,9 @@
 'use client'
-import { BriefData } from '@/app/brief/page'
+import { BriefData, FieldErrors } from '@/app/brief/page'
 import { Scale, ShieldCheck } from 'lucide-react'
 import StepHeader from '@/components/StepHeader'
 
-export default function Step19Legal({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number }) {
+export default function Step19Legal({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number; fieldErrors?: FieldErrors }) {
   return (
     <div className="fade-in">
       <StepHeader stepNumber={stepNumber} totalSteps={totalSteps} title="Legal & Compliance" description="Dokumen hukum dan kebijakan privasi untuk melindungi bisnis Anda." />

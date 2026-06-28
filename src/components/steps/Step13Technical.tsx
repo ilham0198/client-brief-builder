@@ -1,10 +1,10 @@
 'use client'
-import { BriefData } from '@/app/brief/page'
+import { BriefData, FieldErrors } from '@/app/brief/page'
 import { Server, Zap, Eye, Monitor, Smartphone, Tablet } from 'lucide-react'
 import StepHeader from '@/components/StepHeader'
 import AppleSelect from '@/components/AppleSelect'
 
-export default function Step13Technical({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number }) {
+export default function Step13Technical({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number; fieldErrors?: FieldErrors }) {
   const toggleBrowser = (b: string) => {
     const list: string[] = data.browserSupport || []
     update({ browserSupport: list.includes(b) ? list.filter(x => x !== b) : [...list, b] })

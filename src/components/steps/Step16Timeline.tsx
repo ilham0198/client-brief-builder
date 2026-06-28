@@ -1,10 +1,10 @@
 'use client'
-import { BriefData } from '@/app/brief/page'
+import { BriefData, FieldErrors } from '@/app/brief/page'
 import { Calendar, Clock, Zap } from 'lucide-react'
 import StepHeader from '@/components/StepHeader'
 import AppleDate from '@/components/AppleDate'
 
-export default function Step16Timeline({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number }) {
+export default function Step16Timeline({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number; fieldErrors?: FieldErrors }) {
   return (
     <div className="fade-in">
       <StepHeader stepNumber={stepNumber} totalSteps={totalSteps} title="Timeline" description="Kapan website ini harus siap diluncurkan?" />

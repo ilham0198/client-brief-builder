@@ -1,9 +1,9 @@
 'use client'
-import { BriefData } from '@/app/brief/page'
+import { BriefData, FieldErrors } from '@/app/brief/page'
 import { FileText, Mic } from 'lucide-react'
 import StepHeader from '@/components/StepHeader'
 
-export default function Step11ContentCopy({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number }) {
+export default function Step11ContentCopy({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number; fieldErrors?: FieldErrors }) {
   const TONES = [
     { id: 'professional', label: 'Profesional', desc: 'Formal, berwibawa, terpercaya' },
     { id: 'friendly', label: 'Friendly', desc: 'Santai, ramah, seperti teman' },

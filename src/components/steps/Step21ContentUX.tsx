@@ -1,9 +1,9 @@
 'use client'
-import { BriefData } from '@/app/brief/page'
+import { BriefData, FieldErrors } from '@/app/brief/page'
 import { Layers, MousePointerClick, Route, Heart, Quote } from 'lucide-react'
 import StepHeader from '@/components/StepHeader'
 
-export default function Step21ContentUX({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number }) {
+export default function Step21ContentUX({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number; fieldErrors?: FieldErrors }) {
   const toggleEmotion = (e: string) => {
     const list: string[] = data.emotionalResponse || []
     update({ emotionalResponse: list.includes(e) ? list.filter(x => x !== e) : [...list, e] })

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { sendAdminNotification, sendClientConfirmation } from '@/lib/email'
 
 const str = (val: any) => {
   if (!val) return '[]'
@@ -169,6 +170,20 @@ export async function POST(req: NextRequest) {
         notificationPrefs: str(body.notificationPrefs),
       },
     })
+
+    try {
+  await sendAdminNotification(brief)
+  console.log('✅ Admin email terkirim')
+} catch (e) {
+  console.error('❌ Admin email gagal:', e)
+}
+
+try {
+  await sendClientConfirmation(brief)
+  console.log('✅ Client email terkirim')
+} catch (e) {
+  console.error('❌ Client email gagal:', e)
+}
     
     return NextResponse.json({ success: true, id: brief.id })
   } catch (e: any) {

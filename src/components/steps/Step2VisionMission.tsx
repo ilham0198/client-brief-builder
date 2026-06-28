@@ -1,9 +1,9 @@
 'use client'
-import { BriefData } from '@/app/brief/page'
+import { BriefData, FieldErrors } from '@/app/brief/page'
 import { Sparkles, Target, Heart, Star } from 'lucide-react'
 import StepHeader from '@/components/StepHeader'
 
-export default function Step2VisionMission({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number }) {
+export default function Step2VisionMission({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number; fieldErrors?: FieldErrors }) {
   const toggleValue = (value: string) => {
     const list: string[] = data.coreValues || []
     update({ coreValues: list.includes(value) ? list.filter(x => x !== value) : [...list, value] })
@@ -32,36 +32,68 @@ export default function Step2VisionMission({ data, update, stepNumber, totalStep
       <StepHeader stepNumber={stepNumber} totalSteps={totalSteps} title="Visi & Misi" description="Apa yang menggerakkan bisnis Anda dan nilai-nilai yang dipegang." />
 
       <div className="space-y-10">
+
+        {/* Visi */}
         <div className="flex items-start gap-4">
           <Sparkles className="w-6 h-6 text-apple-gray-400 mt-4 flex-shrink-0" />
           <div className="flex-1">
             <label className="block text-xl font-semibold mb-2">Visi Perusahaan</label>
             <p className="text-apple-gray-500 mb-4">Tujuan jangka panjang atau impian besar bisnis Anda.</p>
-            <textarea
-              value={data.vision || ''}
-              onChange={e => update({ vision: e.target.value })}
-              placeholder="Contoh: Menjadi platform e-commerce terdepan di Asia Tenggara yang memberdayakan UMKM..."
-              rows={4}
-              className="w-full px-5 py-4 text-base rounded-xl bg-apple-gray-100 border border-apple-gray-200 transition-all hover:bg-apple-gray-200 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black resize-none"
-            />
+            <label className="flex items-center gap-3 mb-4 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={data.visionNotReady || false}
+                onChange={e => update({
+                  visionNotReady: e.target.checked,
+                  vision: e.target.checked ? 'Belum punya / Sedang dalam proses' : ''
+                })}
+                className="w-5 h-5 rounded accent-black"
+              />
+              <span className="text-apple-gray-500">Belum punya / Sedang dalam proses</span>
+            </label>
+            {!data.visionNotReady && (
+              <textarea
+                value={data.vision || ''}
+                onChange={e => update({ vision: e.target.value })}
+                placeholder="Contoh: Menjadi platform e-commerce terdepan di Asia Tenggara yang memberdayakan UMKM..."
+                rows={4}
+                className="w-full px-5 py-4 text-base rounded-xl bg-apple-gray-100 border border-apple-gray-200 transition-all hover:bg-apple-gray-200 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black resize-none"
+              />
+            )}
           </div>
         </div>
 
+        {/* Misi */}
         <div className="flex items-start gap-4">
           <Target className="w-6 h-6 text-apple-gray-400 mt-4 flex-shrink-0" />
           <div className="flex-1">
             <label className="block text-xl font-semibold mb-2">Misi Perusahaan</label>
             <p className="text-apple-gray-500 mb-4">Langkah-langkah konkret untuk mencapai visi.</p>
-            <textarea
-              value={data.mission || ''}
-              onChange={e => update({ mission: e.target.value })}
-              placeholder="Contoh: Menyediakan solusi teknologi yang mudah digunakan, mendukung pertumbuhan UMKM..."
-              rows={4}
-              className="w-full px-5 py-4 text-base rounded-xl bg-apple-gray-100 border border-apple-gray-200 transition-all hover:bg-apple-gray-200 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black resize-none"
-            />
+            <label className="flex items-center gap-3 mb-4 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={data.missionNotReady || false}
+                onChange={e => update({
+                  missionNotReady: e.target.checked,
+                  mission: e.target.checked ? 'Belum punya / Sedang dalam proses' : ''
+                })}
+                className="w-5 h-5 rounded accent-black"
+              />
+              <span className="text-apple-gray-500">Belum punya / Sedang dalam proses</span>
+            </label>
+            {!data.missionNotReady && (
+              <textarea
+                value={data.mission || ''}
+                onChange={e => update({ mission: e.target.value })}
+                placeholder="Contoh: Menyediakan solusi teknologi yang mudah digunakan, mendukung pertumbuhan UMKM..."
+                rows={4}
+                className="w-full px-5 py-4 text-base rounded-xl bg-apple-gray-100 border border-apple-gray-200 transition-all hover:bg-apple-gray-200 focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black resize-none"
+              />
+            )}
           </div>
         </div>
 
+        {/* Core Values */}
         <div className="flex items-start gap-4">
           <Heart className="w-6 h-6 text-apple-gray-400 mt-4 flex-shrink-0" />
           <div className="flex-1">
@@ -95,6 +127,7 @@ export default function Step2VisionMission({ data, update, stepNumber, totalStep
           </div>
         </div>
 
+        {/* USP */}
         <div className="flex items-start gap-4">
           <Star className="w-6 h-6 text-apple-gray-400 mt-4 flex-shrink-0" />
           <div className="flex-1">
@@ -110,6 +143,7 @@ export default function Step2VisionMission({ data, update, stepNumber, totalStep
           </div>
         </div>
 
+        {/* Brand Personality */}
         <div>
           <label className="block text-xl font-semibold mb-2">Kepribadian Brand</label>
           <p className="text-apple-gray-500 mb-4">Bagaimana brand Anda seharusnya dipersepsikan?</p>
@@ -140,6 +174,7 @@ export default function Step2VisionMission({ data, update, stepNumber, totalStep
             />
           )}
         </div>
+
       </div>
     </div>
   )

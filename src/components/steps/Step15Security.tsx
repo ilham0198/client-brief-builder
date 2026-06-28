@@ -1,9 +1,9 @@
 'use client'
-import { BriefData } from '@/app/brief/page'
+import { BriefData, FieldErrors } from '@/app/brief/page'
 import { Scale, ShieldCheck } from 'lucide-react'
 import StepHeader from '@/components/StepHeader'
 
-export default function Step15Security({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number }) {
+export default function Step15Security({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number; fieldErrors?: FieldErrors }) {
   const toggleSecurity = (s: string) => {
     const list: string[] = data.securityRequirements || []
     update({ securityRequirements: list.includes(s) ? list.filter(x => x !== s) : [...list, s] })

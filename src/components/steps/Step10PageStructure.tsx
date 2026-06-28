@@ -1,10 +1,10 @@
 'use client'
-import { BriefData } from '@/app/brief/page'
+import { BriefData, FieldErrors } from '@/app/brief/page'
 import { Layout, Menu } from 'lucide-react'
 import StepHeader from '@/components/StepHeader'
 import AppleSelect from '@/components/AppleSelect'
 
-export default function Step10PageStructure({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number }) {
+export default function Step10PageStructure({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number; fieldErrors?: FieldErrors }) {
   const togglePage = (p: string) => {
     const list: string[] = data.pages || []
     update({ pages: list.includes(p) ? list.filter(x => x !== p) : [...list, p] })

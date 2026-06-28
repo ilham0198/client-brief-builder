@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Clock, CheckCircle, FileText } from 'lucide-react'
 
 export default function Home() {
   return (
@@ -13,12 +13,24 @@ export default function Home() {
           <p className="text-2xl md:text-3xl text-apple-gray-500 max-w-3xl mx-auto mb-12 font-light leading-relaxed">
             Mulai dengan brief yang komprehensif. Kami akan menerjemahkan ide Anda menjadi pengalaman digital yang luar biasa.
           </p>
+
+          {/* Info cards */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+            <div className="flex items-center gap-2 px-5 py-3 rounded-full bg-apple-gray-100 text-apple-gray-600 text-sm font-medium">
+              Estimasi pengisian 15–20 menit
+            </div>
+            <div className="flex items-center gap-2 px-5 py-3 rounded-full bg-apple-gray-100 text-apple-gray-600 text-sm font-medium">
+              24 langkah terstruktur
+            </div>
+          </div>
+
           <Link
             href="/brief"
             className="inline-flex items-center gap-3 px-10 py-5 rounded-full bg-black text-white font-medium text-lg hover:bg-apple-gray-800 transition-all shadow-apple hover:shadow-apple-hover"
           >
             Mulai Sekarang <ArrowRight className="w-5 h-5" />
           </Link>
+
         </div>
       </section>
     </main>

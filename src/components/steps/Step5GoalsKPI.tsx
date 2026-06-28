@@ -1,9 +1,9 @@
 'use client'
-import { BriefData } from '@/app/brief/page'
+import { BriefData, FieldErrors } from '@/app/brief/page'
 import { Trophy, Target, TrendingUp, Calendar } from 'lucide-react'
 import StepHeader from '@/components/StepHeader'
 
-export default function Step5GoalsKPI({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number }) {
+export default function Step5GoalsKPI({ data, update, stepNumber, totalSteps, fieldErrors = {} }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number; fieldErrors?: FieldErrors }) {
   const PRIMARY_GOALS = [
     { id: 'leads', label: 'Generate Leads', desc: 'Mendapatkan kontak calon klien' },
     { id: 'sales', label: 'Penjualan Online', desc: 'Transaksi langsung dari website' },
@@ -60,6 +60,8 @@ export default function Step5GoalsKPI({ data, update, stepNumber, totalSteps }: 
                   className={`p-6 rounded-2xl border-2 text-left transition-all ${
                     data.primaryGoal === g.id
                       ? 'border-black bg-apple-gray-50'
+                      : fieldErrors.primaryGoal
+                      ? 'border-red-300 hover:border-red-400'
                       : 'border-apple-gray-200 hover:border-apple-gray-300'
                   }`}
                 >
@@ -68,6 +70,9 @@ export default function Step5GoalsKPI({ data, update, stepNumber, totalSteps }: 
                 </button>
               ))}
             </div>
+            {fieldErrors.primaryGoal && (
+              <p className="mt-3 text-sm text-red-600">{fieldErrors.primaryGoal}</p>
+            )}
             {data.primaryGoal === 'other' && (
               <textarea
                 value={data.primaryGoalOther || ''}
@@ -83,32 +88,22 @@ export default function Step5GoalsKPI({ data, update, stepNumber, totalSteps }: 
         <div className="flex items-start gap-4">
           <Target className="w-6 h-6 text-apple-gray-400 mt-4 flex-shrink-0" />
           <div className="flex-1">
-            <label className="block text-xl font-semibold mb-2">Tujuan Sekunder (Pilih beberapa)</label>
+            <label className="block text-xl font-semibold mb-2">
+              Tujuan Sekunder <span className="text-base font-normal text-apple-gray-400">(opsional)</span>
+            </label>
             <p className="text-apple-gray-500 mb-4">Tujuan pendukung lainnya.</p>
             <div className="flex flex-wrap gap-3">
               {SECONDARY_GOALS.map(g => (
-                <button
-                  key={g}
-                  type="button"
-                  onClick={() => toggleSecondary(g)}
-                  className={`px-5 py-3 rounded-full font-medium transition-all ${
-                    (data.secondaryGoals || []).includes(g)
-                      ? 'bg-black text-white'
-                      : 'bg-apple-gray-100 text-apple-gray-600 hover:bg-apple-gray-200'
-                  }`}
-                >
+                <button key={g} type="button" onClick={() => toggleSecondary(g)}
+                  className={`px-5 py-3 rounded-full font-medium transition-all ${(data.secondaryGoals || []).includes(g) ? 'bg-black text-white' : 'bg-apple-gray-100 text-apple-gray-600 hover:bg-apple-gray-200'}`}>
                   {g}
                 </button>
               ))}
             </div>
             {hasOtherSecondary && (
-              <textarea
-                value={data.secondaryGoalsOther || ''}
-                onChange={e => update({ secondaryGoalsOther: e.target.value })}
-                placeholder="Sebutkan tujuan sekunder lainnya..."
-                rows={2}
-                className="w-full mt-4 px-6 py-4 text-lg rounded-2xl bg-apple-gray-100 border-2 border-transparent focus:bg-white focus:border-black transition-all resize-none"
-              />
+              <textarea value={data.secondaryGoalsOther || ''} onChange={e => update({ secondaryGoalsOther: e.target.value })}
+                placeholder="Sebutkan tujuan sekunder lainnya..." rows={2}
+                className="w-full mt-4 px-6 py-4 text-lg rounded-2xl bg-apple-gray-100 border-2 border-transparent focus:bg-white focus:border-black transition-all resize-none" />
             )}
           </div>
         </div>
@@ -116,32 +111,22 @@ export default function Step5GoalsKPI({ data, update, stepNumber, totalSteps }: 
         <div className="flex items-start gap-4">
           <TrendingUp className="w-6 h-6 text-apple-gray-400 mt-4 flex-shrink-0" />
           <div className="flex-1">
-            <label className="block text-xl font-semibold mb-2">Key Performance Indicators (KPI)</label>
+            <label className="block text-xl font-semibold mb-2">
+              KPI <span className="text-base font-normal text-apple-gray-400">(opsional)</span>
+            </label>
             <p className="text-apple-gray-500 mb-4">Metrik apa yang akan Anda pantau untuk mengukur kesuksesan?</p>
             <div className="flex flex-wrap gap-3">
               {KPIS.map(k => (
-                <button
-                  key={k}
-                  type="button"
-                  onClick={() => toggleKPI(k)}
-                  className={`px-5 py-3 rounded-full font-medium transition-all ${
-                    (data.kpis || []).includes(k)
-                      ? 'bg-black text-white'
-                      : 'bg-apple-gray-100 text-apple-gray-600 hover:bg-apple-gray-200'
-                  }`}
-                >
+                <button key={k} type="button" onClick={() => toggleKPI(k)}
+                  className={`px-5 py-3 rounded-full font-medium transition-all ${(data.kpis || []).includes(k) ? 'bg-black text-white' : 'bg-apple-gray-100 text-apple-gray-600 hover:bg-apple-gray-200'}`}>
                   {k}
                 </button>
               ))}
             </div>
             {hasOtherKPI && (
-              <textarea
-                value={data.kpisOther || ''}
-                onChange={e => update({ kpisOther: e.target.value })}
-                placeholder="Sebutkan KPI lainnya..."
-                rows={2}
-                className="w-full mt-4 px-6 py-4 text-lg rounded-2xl bg-apple-gray-100 border-2 border-transparent focus:bg-white focus:border-black transition-all resize-none"
-              />
+              <textarea value={data.kpisOther || ''} onChange={e => update({ kpisOther: e.target.value })}
+                placeholder="Sebutkan KPI lainnya..." rows={2}
+                className="w-full mt-4 px-6 py-4 text-lg rounded-2xl bg-apple-gray-100 border-2 border-transparent focus:bg-white focus:border-black transition-all resize-none" />
             )}
           </div>
         </div>
@@ -149,29 +134,26 @@ export default function Step5GoalsKPI({ data, update, stepNumber, totalSteps }: 
         <div className="flex items-start gap-4">
           <Target className="w-6 h-6 text-apple-gray-400 mt-4 flex-shrink-0" />
           <div className="flex-1">
-            <label className="block text-xl font-semibold mb-2">Target Angka Spesifik</label>
+            <label className="block text-xl font-semibold mb-2">
+              Target Angka Spesifik <span className="text-base font-normal text-apple-gray-400">(opsional)</span>
+            </label>
             <p className="text-apple-gray-500 mb-4">Berapa target konkret yang ingin dicapai?</p>
-            <textarea
-              value={data.successMetrics || ''}
-              onChange={e => update({ successMetrics: e.target.value })}
-              placeholder="Contoh: 10.000 visitor/bulan dalam 6 bulan pertama, 5% conversion rate..."
-              rows={3}
-              className="w-full px-6 py-4 text-lg rounded-2xl bg-apple-gray-100 border-2 border-transparent focus:bg-white focus:border-black transition-all resize-none"
-            />
+            <textarea value={data.successMetrics || ''} onChange={e => update({ successMetrics: e.target.value })}
+              placeholder="Contoh: 10.000 visitor/bulan dalam 6 bulan pertama, 5% conversion rate..." rows={3}
+              className="w-full px-6 py-4 text-lg rounded-2xl bg-apple-gray-100 border-2 border-transparent focus:bg-white focus:border-black transition-all resize-none" />
           </div>
         </div>
 
         <div className="flex items-start gap-4">
           <Calendar className="w-6 h-6 text-apple-gray-400 mt-4 flex-shrink-0" />
           <div className="flex-1">
-            <label className="block text-xl font-semibold mb-2">Timeline untuk Goal</label>
+            <label className="block text-xl font-semibold mb-2">
+              Timeline untuk Goal <span className="text-base font-normal text-apple-gray-400">(opsional)</span>
+            </label>
             <p className="text-apple-gray-500 mb-4">Kapan Anda ingin mulai melihat hasil?</p>
-            <input
-              value={data.timelineGoal || ''}
-              onChange={e => update({ timelineGoal: e.target.value })}
+            <input value={data.timelineGoal || ''} onChange={e => update({ timelineGoal: e.target.value })}
               placeholder="Contoh: Dalam 3 bulan setelah launch, dalam 6 bulan, atau target tahunan?"
-              className="w-full px-6 py-4 text-lg rounded-2xl bg-apple-gray-100 border-2 border-transparent focus:bg-white focus:border-black transition-all"
-            />
+              className="w-full px-6 py-4 text-lg rounded-2xl bg-apple-gray-100 border-2 border-transparent focus:bg-white focus:border-black transition-all" />
           </div>
         </div>
       </div>
