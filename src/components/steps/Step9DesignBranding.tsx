@@ -1,6 +1,6 @@
 'use client'
 import { BriefData, FieldErrors } from '@/app/brief/page'
-import { Palette, Image, Link as LinkIcon, Upload } from 'lucide-react'
+import { Palette, Image, Link as LinkIcon, Upload, AlertCircle } from 'lucide-react'
 import StepHeader from '@/components/StepHeader'
 
 export default function Step9DesignBranding({ data, update, stepNumber, totalSteps }: { data: BriefData; update: (p: any) => void; stepNumber: number; totalSteps: number; fieldErrors?: FieldErrors }) {
@@ -114,32 +114,69 @@ export default function Step9DesignBranding({ data, update, stepNumber, totalSte
           <div className="text-sm text-apple-gray-500">Total warna terpilih: {(data.colorPalette || []).length}</div>
         </div>
 
-        <div className="flex items-center gap-4 p-6 rounded-2xl bg-apple-gray-100">
-          <input type="checkbox" checked={data.logoProvided || false} onChange={e => update({ logoProvided: e.target.checked })} className="w-6 h-6 rounded accent-black" />
-          <div>
-            <div className="font-semibold">Logo sudah tersedia</div>
-            <div className="text-apple-gray-500 text-sm mt-1">Anda akan menyediakan logo dalam format vector (AI, SVG, EPS) atau PNG resolusi tinggi.</div>
-          </div>
-        </div>
+        {/* Logo */}
+        <div>
+          <label className="block text-xl font-semibold mb-2">Logo</label>
 
-        {data.logoProvided && (
-          <div className="pl-4 border-l-2 border-apple-gray-200 space-y-4 fade-in">
+          <div className="flex items-center gap-4 p-6 rounded-2xl bg-apple-gray-100 mb-4">
+            <input type="checkbox" checked={data.logoProvided || false} onChange={e => update({ logoProvided: e.target.checked })} className="w-6 h-6 rounded accent-black" />
             <div>
-              <label className="block text-lg font-semibold mb-2 flex items-center gap-2"><Upload className="w-5 h-5" /> Upload File Logo</label>
-              <input type="file" accept="image/*,.ai,.eps,.svg,.pdf" onChange={(e) => {
-                const file = e.target.files?.[0];
-                if(file) update({ logoFileName: file.name });
-              }} className="w-full px-4 py-3 rounded-xl bg-white border border-apple-gray-200 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-black file:text-white hover:file:bg-apple-gray-800" />
-              {data.logoFileName && <div className="text-sm text-green-600 mt-2 font-medium"> Logo Berhasil Diupload!</div>}
-            </div>
-            <div>
-              <label className="block text-lg font-semibold mb-2">Atau Paste Link Cloud Storage</label>
-              <input type="text" value={data.logoLink || ''} onChange={e => update({ logoLink: e.target.value })}
-                placeholder="https://drive.google.com/... atau https://dropbox.com/..."
-                className="w-full px-6 py-4 text-lg rounded-2xl bg-apple-gray-100 border-2 border-transparent focus:bg-white focus:border-black transition-all" />
+              <div className="font-semibold">Logo sudah tersedia</div>
+              <div className="text-apple-gray-500 text-sm mt-1">Centang jika Anda sudah memiliki logo dalam format vector (AI, SVG, EPS) atau PNG resolusi tinggi.</div>
             </div>
           </div>
-        )}
+
+          {data.logoProvided && (
+            <div className="pl-4 border-l-2 border-apple-gray-200 space-y-4 fade-in">
+
+              {/* Info box */}
+              <div className="flex items-start gap-3 p-4 rounded-2xl bg-amber-50 border border-amber-200">
+                <AlertCircle className="w-5 h-5 text-amber-500 mt-0.5 flex-shrink-0" />
+                <div className="text-sm text-amber-800">
+                  <span className="font-semibold">Penting:</span> Form ini tidak dapat menyimpan file secara langsung. Mohon upload logo Anda ke Google Drive, Dropbox, atau cloud storage lainnya, lalu paste link-nya di bawah agar tim kami dapat mengaksesnya.
+                </div>
+              </div>
+
+              {/* Panduan upload Google Drive */}
+              <div className="p-4 rounded-2xl bg-apple-gray-100 text-sm text-apple-gray-600 space-y-1">
+                <div className="font-semibold text-black mb-2">Cara share file dari Google Drive:</div>
+                <div>1. Upload logo ke Google Drive</div>
+                <div>2. Klik kanan file → <span className="font-medium">Share</span></div>
+                <div>3. Ubah akses menjadi <span className="font-medium">"Anyone with the link"</span></div>
+                <div>4. Klik <span className="font-medium">Copy link</span> → paste di bawah</div>
+              </div>
+
+              <div>
+                <label className="block text-lg font-semibold mb-2 flex items-center gap-2">
+                  <LinkIcon className="w-5 h-5" /> Link File Logo <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="url"
+                  value={data.logoLink || ''}
+                  onChange={e => update({ logoLink: e.target.value })}
+                  placeholder="https://drive.google.com/file/d/... atau https://dropbox.com/..."
+                  className="w-full px-6 py-4 text-lg rounded-2xl bg-white border-2 border-apple-gray-200 focus:border-black transition-all"
+                />
+                {data.logoLink && (
+                  <div className="text-sm text-green-600 mt-2 font-medium flex items-center gap-1">
+                    ✓ Link logo berhasil ditambahkan
+                  </div>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-apple-gray-500 mb-2">Nama file logo (opsional)</label>
+                <input
+                  type="text"
+                  value={data.logoFileName || ''}
+                  onChange={e => update({ logoFileName: e.target.value })}
+                  placeholder="Contoh: logo-perusahaan-final.svg"
+                  className="w-full px-5 py-3 text-base rounded-xl bg-apple-gray-100 border border-apple-gray-200 focus:border-black transition-all"
+                />
+              </div>
+            </div>
+          )}
+        </div>
 
         <div>
           <label className="block text-xl font-semibold mb-2">Brand Guidelines</label>
