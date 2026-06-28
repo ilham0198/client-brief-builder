@@ -55,7 +55,6 @@ export default function Step17Budget({ data, update, stepNumber, totalSteps, fie
           {/* Disclaimer */}
           <div className="mt-6 p-5 rounded-2xl bg-blue-50 border border-blue-200">
             <div className="flex items-start gap-3">
-              <span className="text-2xl">💡</span>
               <div>
                 <p className="text-blue-900 font-medium mb-1">Estimasi budget dapat berubah</p>
                 <p className="text-blue-700 text-sm">
