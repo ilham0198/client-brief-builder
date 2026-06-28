@@ -39,11 +39,11 @@ function SuccessContent() {
           <ul className="space-y-3 text-apple-gray-600">
             <li className="flex gap-3">
               <span className="font-bold text-black">1.</span>
-              <span>Tim kami akan menganalisis kebutuhan Anda dalam 1x24 jam kerja.</span>
+              <span>Tim kami akan menganalisis kebutuhan andasecepatnya.</span>
             </li>
             <li className="flex gap-3">
               <span className="font-bold text-black">2.</span>
-              <span>Kami akan menghubungi Anda melalui email/WhatsApp untuk menjadwalkan konsultasi awal.</span>
+              <span>Kami akan menghubungi Anda untuk menjadwalkan konsultasi awal.</span>
             </li>
             <li className="flex gap-3">
               <span className="font-bold text-black">3.</span>
@@ -53,7 +53,7 @@ function SuccessContent() {
         </div>
 
         <p className="text-sm text-apple-gray-400 mb-8">
-          Jika Anda memiliki pertanyaan mendesak, silakan hubungi kami di <span className="text-black font-medium">hello@perusahaananda.com</span>
+          Jika Anda memiliki pertanyaan mendesak, silakan hubungi kami di <span className="text-black font-medium">angeldust0992@gmail.com</span>
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
