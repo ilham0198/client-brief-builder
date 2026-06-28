@@ -51,6 +51,21 @@ export default function Step17Budget({ data, update, stepNumber, totalSteps, fie
           {fieldErrors.budgetRange && (
             <p className="mt-3 text-sm text-red-600">{fieldErrors.budgetRange}</p>
           )}
+          
+          {/* Disclaimer */}
+          <div className="mt-6 p-5 rounded-2xl bg-blue-50 border border-blue-200">
+            <div className="flex items-start gap-3">
+              <span className="text-2xl">💡</span>
+              <div>
+                <p className="text-blue-900 font-medium mb-1">Estimasi budget dapat berubah</p>
+                <p className="text-blue-700 text-sm">
+                  Angka di atas adalah estimasi awal. Untuk rekomendasi yang paling sesuai dengan kebutuhan Anda, 
+                  kami sarankan memilih opsi <strong>"Diskusikan Nanti"</strong>. Tim kami akan memberikan penawaran 
+                  yang disesuaikan setelah memahami scope dan kompleksitas proyek.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="flex items-center gap-4 p-6 rounded-2xl bg-apple-gray-100">
